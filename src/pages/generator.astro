@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Générateur IA de lunettes">
+  <main class="flex flex-col items-center justify-center py-12 px-4 space-y-8">
+    <h1 class="text-3xl font-bold text-center">Générateur de lunettes IA</h1>
+    <p class="text-center text-base-content/70 max-w-2xl">
+      Décris les lunettes que tu veux (forme, couleur, style, matériau, etc.) et l’IA modifiera le SVG en conséquence.
+    </p>
+
+    <form id="aiForm" class="w-full max-w-xl space-y-4">
+      <textarea
+        id="prompt"
+        placeholder="Exemple : Crée des lunettes rondes avec une monture dorée et des branches fines en noir."
+        class="textarea textarea-bordered w-full h-32"
+        required
+      ></textarea>
+      <button type="submit" class="btn btn-accent w-full">Générer le SVG</button>
+    </form>
+
+    <div id="loading" class="hidden text-accent font-semibold">Génération en cours...</div>
+
+    <section id="result" class="w-full flex justify-center mt-10">
+      <div id="svgContainer" class="border border-base-200 rounded-lg p-4 bg-base-100 w-[600px] h-[300px] flex items-center justify-center overflow-hidden">
+        <span class="text-base-content/50">Aucun SVG généré pour l’instant</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector('#aiForm');
+    const promptInput = document.querySelector('#prompt');
+    const loadingEl = document.querySelector('#loading');
+    const svgContainer = document.querySelector('#svgContainer');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const prompt = promptInput.value.trim();
+      if (!prompt) return;
+
+      svgContainer.innerHTML = '';
+      loadingEl.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/generate-svg', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt })
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          svgContainer.innerHTML = '<p class="text-error">Erreur IA : ' + (data.error || 'Inconnue') + '</p>';
+          return;
+        }
+
+        const svgCode = data.svg?.trim();
+        if (!svgCode) {
+          svgContainer.innerHTML = '<p class="text-error">SVG non valide renvoyé.</p>';
+          return;
+        }
+
+        // Affiche le SVG généré
+        svgContainer.innerHTML = svgCode;
+
+      } catch (err) {
+        svgContainer.innerHTML = '<p class="text-error">Erreur réseau : ' + err.message + '</p>';
+      } finally {
+        loadingEl.classList.add('hidden');
+      }
+    });
+  </script>
+</Layout>

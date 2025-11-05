@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Allan:wght@400;700&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: light --default, dark --dark, monTheme;
+};
+
+@theme {
+  --font-allan : "Allan", serif;
+  --font-arial : Arial, sans-serif;
+}
+
+@plugin "daisyui/theme" {
+  name: "monTheme";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: #ffffff;
+  --color-base-200: #F3F3F3;
+  --color-base-300: #F9FAFB;
+  --color-base-content: #0A0A0A;
+  --color-primary: #FFFFFF;
+  --color-primary-content: #0A0A0A;
+  --color-secondary: #F3F3F5;
+  --color-secondary-content: #717182;
+  --color-accent: #000000;
+  --color-accent-content: #FFFFFF;
+  --color-neutral: oklch(13% 0.028 261.692);
+  --color-neutral-content: oklch(98% 0.002 247.839);
+  --color-info: #e7f1e5;
+  --color-info-content: #0A0A0A;
+  --color-success: #9CAF88;
+  --color-success-content: #0A0A0A;
+  --color-warning: oklch(97% 0.071 103.193);
+  --color-warning-content: #0A0A0A;
+  --color-error: oklch(93% 0.032 17.717);
+  --color-error-content: #0A0A0A;
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
+  --size-selector: 0.21875rem;
+  --size-field: 0.21875rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}

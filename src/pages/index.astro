@@ -1,11 +1,113 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Connexion / Inscription">
+  <main class="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-lg p-8 relative">
+      <!-- Onglets -->
+      <div class="flex mb-6">
+        <button id="tab-login" class="flex-1 py-2 font-semibold border-b-2 border-transparent hover:border-accent transition">Connexion</button>
+        <button id="tab-signup" class="flex-1 py-2 font-semibold border-b-2 border-accent text-accent transition">Inscription</button>
+      </div>
+
+      <!-- Formulaire Connexion -->
+      <form id="login-form" class="flex flex-col gap-4" style="display:none">
+        <label>Email</label>
+        <input name="email" type="email" placeholder="exemple@domaine.fr" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <label>Mot de passe</label>
+        <input name="motdepasse" type="password" placeholder="Mot de passe" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <button type="submit" class="btn w-full bg-[#1E2A4A] text-white py-3 rounded-lg font-semibold hover:bg-[#162038] transition">Se connecter</button>
+        <div id="login-message" class="text-red-500 text-sm mt-2"></div>
+      </form>
+
+      <!-- Formulaire Inscription -->
+      <form id="signup-form" class="flex flex-col gap-4">
+        <label>Prénom</label>
+        <input name="prenom" type="text" placeholder="Prénom" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <label>Nom</label>
+        <input name="nom" type="text" placeholder="Nom" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <label>Email</label>
+        <input name="email" type="email" placeholder="exemple@domaine.fr" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <label>Mot de passe</label>
+        <input name="motdepasse" type="password" placeholder="Mot de passe" class="input input-bordered w-full rounded-lg px-4 py-3 bg-[#F9F9F9]" required />
+        <button type="submit" class="btn w-full bg-[#1E2A4A] text-white py-3 rounded-lg font-semibold hover:bg-[#162038] transition">S'inscrire</button>
+        <div id="signup-message" class="text-red-500 text-sm mt-2"></div>
+      </form>
+    </div>
+  </main>
+
+  <script type="module">
+    const tabLogin = document.getElementById("tab-login");
+    const tabSignup = document.getElementById("tab-signup");
+    const loginForm = document.getElementById("login-form");
+    const signupForm = document.getElementById("signup-form");
+
+    let activeTab = "signup"; // onglet par défaut
+
+    function updateTabs() {
+      if (activeTab === "login") {
+        loginForm.style.display = "flex";
+        signupForm.style.display = "none";
+        tabLogin.classList.add("border-accent", "text-accent");
+        tabSignup.classList.remove("border-accent", "text-accent");
+      } else {
+        signupForm.style.display = "flex";
+        loginForm.style.display = "none";
+        tabSignup.classList.add("border-accent", "text-accent");
+        tabLogin.classList.remove("border-accent", "text-accent");
+      }
+    }
+
+    // Initialisation onglets
+    updateTabs();
+    tabLogin.addEventListener("click", () => { activeTab = "login"; updateTabs(); });
+    tabSignup.addEventListener("click", () => { activeTab = "signup"; updateTabs(); });
+
+    // ---------------- Formulaire Signup ----------------
+    const signupMsg = document.getElementById("signup-message");
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      signupMsg.textContent = "";
+      const prenom = signupForm.elements["prenom"].value.trim();
+      const nom = signupForm.elements["nom"].value.trim();
+      const email = signupForm.elements["email"].value.trim();
+      const motdepasse = signupForm.elements["motdepasse"].value;
+
+      try {
+        const res = await fetch("/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prenom, nom, email, motdepasse }),
+        });
+        const json = await res.json();
+        if (!res.ok) signupMsg.textContent = json.error || "Erreur lors de l'inscription";
+        else window.location.href = "/personnalisation";
+      } catch (err) {
+        signupMsg.textContent = "Erreur réseau";
+      }
+    });
+
+    // ---------------- Formulaire Login ----------------
+    const loginMsg = document.getElementById("login-message");
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginMsg.textContent = "";
+      const email = loginForm.elements["email"].value.trim();
+      const motdepasse = loginForm.elements["motdepasse"].value;
+
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, motdepasse }),
+        });
+        const json = await res.json();
+        if (!res.ok) loginMsg.textContent = json.error || "Erreur lors de la connexion";
+        else window.location.href = "/personnalisation";
+      } catch (err) {
+        loginMsg.textContent = "Erreur réseau";
+      }
+    });
+  </script>
 </Layout>

@@ -1,0 +1,43 @@
+---
+// Aucun import requis, composant autonome
+---
+<header>
+  <div class="flex items-center justify-between px-8 py-4 border-[#D9D9D9] border-b-3">
+    <div>
+      <a href="/" class="font-allan text-[50px] hover:underline">TAVUE</a>
+      <div class="text-[#6A7282]">Fabrication française</div>
+    </div>
+    <nav class="flex gap-8 text-base-content/70 items-center">
+      <a href="/generator" class="font-bold">Générer votre lunette</a>
+      <a href="/personnalisation" class="font-bold">Personnaliser sa paire</a>
+      <a href="/gallery">Galerie</a>
+      <span id="header-account"></span>
+    </nav>
+  </div>
+
+  <script type="module">
+    // Rendu dynamique du bouton "Mon compte" / "Logout"
+    const accountNode = document.getElementById('header-account');
+
+    async function renderHeaderAccount() {
+      try {
+        const res = await fetch('/api/me', { credentials: 'same-origin' });
+        const json = await res.json();
+        if (json.authenticated) {
+          accountNode.innerHTML = '<button id="header-logout" class="btn btn-sm btn-outline">Logout</button>';
+          document.getElementById('header-logout').addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+            // redirige vers la page de connexion (index)
+            window.location.href = '/';
+          });
+        } else {
+          accountNode.innerHTML = '<a href="/" class="btn btn-sm btn-primary">Mon compte</a>';
+        }
+      } catch (e) {
+        accountNode.innerHTML = '<a href="/" class="btn btn-sm btn-primary">Mon compte</a>';
+      }
+    }
+
+    renderHeaderAccount();
+  </script>
+</header>

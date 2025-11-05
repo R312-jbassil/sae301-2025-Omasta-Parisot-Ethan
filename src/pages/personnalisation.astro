@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Accueil">
+<main class="flex flex-col md:flex-row px-8 py-10 gap-12">
+  <!-- Sidebar des options -->
+  <aside class="w-full md:w-1/4 space-y-10">
+    <section>
+      <h3 class="text-lg font-semibold mb-2">Couleur de la monture</h3>
+      <div class="flex flex-col gap-2">
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="frameColor" checked class="radio radio-sm radio-accent" />
+          <span>Blanc</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="frameColor" class="radio radio-sm radio-accent" />
+          <span>Noir</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="frameColor" class="radio radio-sm radio-accent" />
+          <span>Magenta</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="frameColor" class="radio radio-sm radio-accent" />
+          <span>Bleu marine</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="frameColor" class="radio radio-sm radio-accent" />
+          <span>Vert sauge</span>
+        </label>
+      </div>
+    </section>
+    <section>
+      <h3 class="text-lg font-semibold mb-2">Couleur des branches</h3>
+      <div class="flex flex-col gap-2">
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="armsColor" checked class="radio radio-sm radio-accent" />
+          <span>Blanc</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="armsColor" class="radio radio-sm radio-accent" />
+          <span>Noir</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="armsColor" class="radio radio-sm radio-accent" />
+          <span>Magenta</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="armsColor" class="radio radio-sm radio-accent" />
+          <span>Bleu marine</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="armsColor" class="radio radio-sm radio-accent" />
+          <span>Vert sauge</span>
+        </label>
+      </div>
+    </section>
+    <section>
+      <h3 class="text-lg font-semibold mb-2">Largeur des verres</h3>
+      <div class="flex flex-col gap-2">
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="lensWidth" checked class="radio radio-sm radio-accent" />
+          <span>Verre petit <span class="text-xs text-base-content/50">(48-50 mm)</span></span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="lensWidth" class="radio radio-sm radio-accent" />
+          <span>Verre moyen <span class="text-xs text-base-content/50">(51-53 mm)</span></span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="lensWidth" class="radio radio-sm radio-accent" />
+          <span>Verre grand <span class="text-xs text-base-content/50">(54-56 mm)</span></span>
+        </label>
+      </div>
+    </section>
+    <section>
+      <h3 class="text-lg font-semibold mb-2">Largeur du pont</h3>
+      <div class="flex flex-col gap-2">
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="bridgeWidth" checked class="radio radio-sm radio-accent" />
+          <span>Pont étroit <span class="text-xs text-base-content/50">(15-18 mm)</span></span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="bridgeWidth" class="radio radio-sm radio-accent" />
+          <span>Pont moyen <span class="text-xs text-base-content/50">(19-21 mm)</span></span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="bridgeWidth" class="radio radio-sm radio-accent" />
+          <span>Pont large <span class="text-xs text-base-content/50">(22-25 mm)</span></span>
+        </label>
+      </div>
+    </section>
+    <section>
+      <h3 class="text-lg font-semibold mb-2">Sélection du matériau</h3>
+      <div class="flex flex-col gap-2">
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="materialselection" checked class="radio radio-sm radio-accent" />
+          <span>Acétate italien</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="materialselection" class="radio radio-sm radio-accent" />
+          <span>Fibre de carbone</span>
+        </label>
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="radio" name="materialselection" class="radio radio-sm radio-accent" />
+          <span>Polyamide</span>
+        </label>
+      </div>
+    </section>
+  </aside>
+
+  <!-- Visu lunettes SVG -->
+  <section id="lunettes-svg" class="w-full md:w-2/4 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 507.87 195.75" style="width:600px;height:250px;">
+      <defs>
+        <style>
+          {.cls-1{fill:#fff;stroke:#1e1e1c;stroke-width:0.5px;}.cls-1,.cls-3,.cls-4{stroke-miterlimit:10;}.cls-2{fill:#727070;}.cls-3,.cls-4{fill:none;stroke:#1d1d1b;}.cls-3{opacity:0.3;}}
+        </style>
+      </defs>
+      <g id="Calque_2" data-name="Calque 2">
+        <g id="Calque_1-2" data-name="Calque 1">
+          <g id="branches">
+            <path class="cls-1" d="M7.27,54s61.8-7,68.79-11,14-10,24.42-12,80.74-14,80.74-14,9-2.49,21.93,7,41.37,39.87,49.34,38.88S264.45,51,262,46,211,5,202.65,2.63c-11.94-3.35-27.41-3-46.36,0S10.75,31.86,10.75,31.86-5.69,39.52,7.26,54Z"/>
+            <path class="cls-2" d="M257,48.48s-.38,7.7-5,7c-6.22-1-44.86-42.36-57.82-40.37,0,0,10.68,3.39,23.12,14.58C225.45,37,260.4,77.05,257,48.48Z"/>
+            <path class="cls-1" d="M340.32,84.66,453.7,47.36s27.71-7,31.75-5,22.17,38.29,22.17,42.33-3,17.54-7.05,18.64c-2.91.8-6.67.14-8.56-5.27-1.77-5-8.57-39.73-15.62-39.41s-63.49,20-63.49,20-16.63,8.07-23.68,14.12-40.31,14.11-40.31,14.11-12.09-9.58-8.56-22.18Z"/>
+            <path class="cls-2" d="M348.52,85.22S476.59,41.15,483.58,45.16c0,0-22.79,3.12-52.29,14.88s-82.77,27.58-82.77,27.58Z"/>
+            <path class="cls-2" d="M478.78,57.62A7.42,7.42,0,0,1,485,61.94c2.15,4.32,12.24,30.94,12.24,30.94s1,6.24,6.47-3.35c0,0-3.85,12-6.71,8.5s-12.24-33-12.24-33-3.59-8.44-6-7.44Z"/>
+          </g>
+          <g id="monture">
+            <path class="cls-1" d="M353.5,86.11c-.3-4.27-12-6.54-15.92-8s-19.66,2.46-19.66,2.46c-15.24-3.93-68.31-11.31-98.78-11.31S178.35,83.49,174.91,83s-21.63-1-29.49-2.45S139,62.85,96.27,47.39,10.75,31.84,10.75,31.84C-6,37.67,2.29,55,2.29,55l2.56,7.95c5.41,2.54,3.94,13.18,5.9,28.9s9.34,35.88,17.7,48.17,39.81,26,55.53,26.53,29.49-2.45,39.81-19.17,21.14-46.2,21.14-46.2l12.77,2a11.39,11.39,0,0,1,6.7,3.87c3.06,3.48,5.55,10,9.52,21.68,9.47,27.67,31.46,49.15,31.46,49.15s7,9.3,41.87,15.85a115.29,115.29,0,0,0,53.48-3.08c22.19-9,27.08-56.3,27.08-56.3s2.29-16.66,9.78-20.85c9.23-5.19,10.36-5.56,15.92-6.66,4.52-.89.3-16.45,0-20.72Zm-244,63.25c-11.79,6.39-40.29,8.84-58-4.91s-26-37.84-28.5-66.34,8.89-31.6,8.89-31.6,18.63-.84,42.71,5.05S125.27,74.16,125.77,85s-4.42,58-16.21,64.38Zm193.14,30.47c-11.31,5.41-26.89,5.9-40,4.91s-47-2-59.29-39.32c0,0-3.44-17.7-6.39-21.63s-11.79-18.13-11.79-23.08c0-10.31,8.95-16.24,8.95-16.24a48.76,48.76,0,0,1,23.48-6.39c13.27,0,81.08,3.45,90.43,16.22s8.84,27.52,10.31,39.32-4.42,40.79-15.72,46.2Z"/>
+          </g>
+          <g id="verres" style="fill:none;stroke:none">
+            <path class="cls-3" d="M16.65,63.64c-1.1,7.58.5,46.85,14.33,69.27s46.38,26.73,51.8,26.68S106,160.87,113.42,148c6.23-10.75,16.5-54.45,11.43-66.43C117,63,74.25,51.47,74.25,51.47S40.63,44.63,31.9,45.89c0,0-12.48-1.21-15.24,17.74Z"/>
+            <path class="cls-4" d="M16.25,63.64c-1.1,7.58.5,46.85,14.32,69.27S77,159.64,82.38,159.59,105.56,160.87,113,148c6.23-10.75,16.49-54.45,11.42-66.43C116.6,63,73.85,51.47,73.85,51.47S40.23,44.63,31.5,45.89c0,0-12.49-1.21-15.24,17.74Z"/>
+            <path class="cls-3" d="M180.7,100.8s-1.37-12,24.5-20.9c14.73-5.09,75.71,4,75.71,4S304.82,89,308.1,94.31,320,115.9,318.48,141.86c-1.43,25.31-9.15,33.56-15.79,38,0,0-8.89,6.17-26.72,7.42-33.37,2.36-46.35-1.43-57.84-9.68-37.42-26.87-37.42-76.76-37.42-76.76Z"/>
+            <path class="cls-4" d="M180.7,100.8s-1.37-12,24.5-20.9c14.73-5.09,75.71,4,75.71,4S304.82,89,308.1,94.31,320,115.9,318.48,141.86c-1.43,25.31-9.15,33.56-15.79,38,0,0-8.89,6.17-26.72,7.42-33.37,2.36-46.35-1.43-57.84-9.68-37.42-26.87-37.42-76.76-37.42-76.76Z"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </section>
+
+  <!-- Bloc produit -->
+  <aside class="w-full md:w-1/4 flex flex-col items-start gap-6">
+    <div>
+      <h2 class="text-lg font-semibold">Couleur de la monture</h2>
+      <p class="text-base-content/70 mt-2">Une monture intemporelle, entièrement fabriquée dans notre atelier français. Légère et résistante, elle allie confort et élégance.</p>
+    </div>
+    <div class="space-y-1">
+      <div><strong class="font-semibold">Matériau&nbsp;:</strong> Acétate italien</div>
+      <div><strong class="font-semibold">Fabrication&nbsp;:</strong> Assemblée à la main en France</div>
+      <div><strong class="font-semibold">Monture&nbsp;:</strong> 189€</div>
+    </div>
+    <div class="text-2xl font-semibold py-2 mb-10">Prix&nbsp;: 189€</div>
+    <button class="btn btn-block btn-accent btn-lg rounded-box my-2">Ajouter au panier</button>
+    <div class="text-xs text-base-content/50"> Livraison gratuite · Retours sous 30 jours </div>
+  </aside>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const svgDoc = document.querySelector('#lunettes-svg svg') || document.querySelector('svg');
+  const montureGroup = svgDoc.querySelector('#monture');
+  const branchesGroup = svgDoc.querySelector('#branches');
+
+  function getColorFromLabel(label) {
+    const colors = {
+      'Blanc': '#FFFFFF',
+      'Noir': '#000000',
+      'Magenta': '#FF00FF',
+      'Bleu marine': '#001F3F',
+      'Vert sauge': '#9CAF88'
+    };
+    return colors[label] || '#FFFFFF';
+  }
+
+  function updateColor(element, color) {
+    if (element) {
+        element.querySelectorAll('path').forEach(el => {
+            // only update non-empty fills to avoid overwriting intentional transparent parts
+            if (el.getAttribute('fill') !== 'none') el.setAttribute('fill', color);
+            el.setAttribute('stroke', '#000000'); // Couleur du stroke pour toutes les couleurs
+            el.setAttribute('stroke-width', '1'); // Épaisseur du stroke
+        });
+    }
+}
+
+  
+
+  // Gestion des couleurs de la monture
+  document.querySelectorAll('input[name="frameColor"]').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const color = getColorFromLabel(e.target.nextElementSibling.textContent.trim());
+      updateColor(montureGroup, color);
+    });
+  });
+
+  // Gestion des couleurs des branches
+  document.querySelectorAll('input[name="armsColor"]').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const color = getColorFromLabel(e.target.nextElementSibling.textContent.trim());
+      updateColor(branchesGroup, color);
+    });
+  });
+
+  // Initialisation des couleurs par défaut
+  updateColor(montureGroup, '#FFFFFF');
+  updateColor(branchesGroup, '#FFFFFF');
+});
+</script>
+</Layout>
