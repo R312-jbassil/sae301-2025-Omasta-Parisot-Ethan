@@ -9,6 +9,7 @@ import Layout from '../layouts/Layout.astro';
       Décris les lunettes que tu veux (forme, couleur, style, matériau, etc.) et l’IA modifiera le SVG en conséquence.
     </p>
 
+    <!-- Formulaire de génération -->
     <form id="aiForm" class="w-full max-w-xl space-y-4">
       <textarea
         id="prompt"
@@ -19,13 +20,26 @@ import Layout from '../layouts/Layout.astro';
       <button type="submit" class="btn btn-accent w-full">Générer le SVG</button>
     </form>
 
+    <!-- Indicateur de chargement -->
     <div id="loading" class="hidden text-accent font-semibold">Génération en cours...</div>
 
+    <!-- Résultat du SVG -->
     <section id="result" class="w-full flex justify-center mt-10">
-      <div id="svgContainer" class="border border-base-200 rounded-lg p-4 bg-base-100 w-[600px] h-[300px] flex items-center justify-center overflow-hidden">
+      <div
+        id="svgContainer"
+        class="border border-base-200 rounded-lg p-4 bg-base-100 w-[600px] h-[300px] flex items-center justify-center overflow-hidden"
+      >
         <span class="text-base-content/50">Aucun SVG généré pour l’instant</span>
       </div>
     </section>
+
+    <!-- Bouton d’ajout à la galerie -->
+    <div class="mt-6 w-full max-w-xl">
+      <button id="addToGallery" class="btn btn-accent w-full" disabled>Ajouter à la galerie</button>
+      <div class="text-xs text-base-content/50 mt-2 text-center">
+        Le bouton s’activera après la génération d’un SVG
+      </div>
+    </div>
   </main>
 
   <script>
@@ -33,7 +47,9 @@ import Layout from '../layouts/Layout.astro';
     const promptInput = document.querySelector('#prompt');
     const loadingEl = document.querySelector('#loading');
     const svgContainer = document.querySelector('#svgContainer');
+    const addBtn = document.querySelector('#addToGallery');
 
+    // Soumission du prompt à l’API de génération
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const prompt = promptInput.value.trim();
@@ -41,6 +57,7 @@ import Layout from '../layouts/Layout.astro';
 
       svgContainer.innerHTML = '';
       loadingEl.classList.remove('hidden');
+      addBtn.disabled = true; // désactive pendant la génération
 
       try {
         const res = await fetch('/api/generate-svg', {
@@ -62,14 +79,43 @@ import Layout from '../layouts/Layout.astro';
           return;
         }
 
-        // Affiche le SVG généré
+        // Affichage du SVG généré
         svgContainer.innerHTML = svgCode;
+
+        // Active le bouton d’ajout à la galerie
+        addBtn.disabled = false;
 
       } catch (err) {
         svgContainer.innerHTML = '<p class="text-error">Erreur réseau : ' + err.message + '</p>';
       } finally {
         loadingEl.classList.add('hidden');
       }
+    });
+
+    // Ajout du modèle à la galerie locale
+    addBtn.addEventListener('click', () => {
+      const svgEl = svgContainer.querySelector('svg');
+      if (!svgEl) {
+        alert('Aucun SVG à enregistrer.');
+        return;
+      }
+
+      const nom_modele = prompt("Entrez un nom pour votre modèle de lunettes :");
+      if (!nom_modele) return;
+
+      const svgCode = svgEl.outerHTML;
+
+      // Récupération ou création de la galerie locale
+      const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+
+      // Ajout du nouveau modèle
+      gallery.push({ nom_modele, svg_code: svgCode });
+
+      // Sauvegarde
+      localStorage.setItem('gallery', JSON.stringify(gallery));
+
+      alert('Modèle ajouté à la galerie locale !');
+      window.location.href = '/gallery';
     });
   </script>
 </Layout>

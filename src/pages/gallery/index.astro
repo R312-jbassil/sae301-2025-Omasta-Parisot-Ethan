@@ -1,14 +1,68 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-const lunettes = []
 ---
 
-
-<Layout title="Galerie">
-  <main class="w-full min-h-screen px-2 md:px-12 py-8 md:py-16 bg-base-100 font-[Arial,Helvetica,sans-serif]">
-    <h1 class="text-center text-base-content font-medium text-lg mb-14 mt-4">Vos créations sauvegardées</h1>
-    <div>
-    { lunettes.map((lunette) => <Card {...lunette}/>)}
-    </div>
+<Layout title="Galerie des modèles de lunettes">
+  <main class="max-w-6xl mx-auto py-12 px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Galerie des modèles de lunettes</h1>
+    
+    <section id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Les modèles seront injectés ici par JS -->
+      <p id="emptyMsg" class="text-center text-base-content/50">Aucun modèle enregistré pour l’instant.</p>
+    </section>
   </main>
+
+  <script>
+    const galleryEl = document.getElementById('gallery');
+    const emptyMsg = document.getElementById('emptyMsg');
+
+    function renderGallery() {
+      const gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+      galleryEl.innerHTML = '';
+
+      if (gallery.length === 0) {
+        emptyMsg.style.display = 'block';
+        return;
+      } else {
+        emptyMsg.style.display = 'none';
+      }
+
+      gallery.forEach(({ nom_modele, svg_code }) => {
+        // Carte du modèle
+        const card = document.createElement('article');
+        card.className = "border border-base-300 rounded-lg p-4 bg-base-100 shadow-md flex flex-col items-center";
+
+        // Titre
+        const title = document.createElement('h2');
+        title.className = "text-xl font-semibold mb-4 text-center";
+        title.textContent = nom_modele;
+
+        // Wrapper SVG
+        const svgWrapper = document.createElement('div');
+        svgWrapper.className = "w-full flex justify-center items-center";
+        svgWrapper.style.height = '350px';  // Augmentation de la hauteur
+        svgWrapper.style.overflow = 'hidden';
+
+        // Insérer le SVG
+        svgWrapper.innerHTML = svg_code;
+
+        // Ajustement du SVG pour qu'il remplisse le conteneur sans déborder
+        const svgEl = svgWrapper.querySelector('svg');
+        if (svgEl) {
+          svgEl.setAttribute('width', '100%');
+          svgEl.setAttribute('height', '100%');
+          svgEl.style.maxWidth = '100%';
+          svgEl.style.maxHeight = '100%';
+          svgEl.style.objectFit = 'contain';
+        }
+
+        // Assemblage
+        card.appendChild(title);
+        card.appendChild(svgWrapper);
+        galleryEl.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderGallery);
+  </script>
 </Layout>
