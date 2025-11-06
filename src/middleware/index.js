@@ -1,25 +1,17 @@
-// src/middleware/index.js
 import PocketBase from "pocketbase";
 
 export const onRequest = async (context, next) => {
   const { url, cookies, locals } = context;
 
-  // --- 1) Recrée une instance PB pour CETTE requête
-  const pb = new PocketBase(import.meta.env.PUBLIC_PB_URL ?? "http://127.0.0.1:8090");
+  const pb = new PocketBase(
+    import.meta.env.PUBLIC_PB_URL ?? "http://127.0.0.1:8090"
+  );
 
-  // --- 2) Charge l'auth depuis le cookie httpOnly
   const cookieVal = cookies.get("pb_auth")?.value;
-  if (cookieVal) {
-    // loadFromCookie attend un header "Cookie" complet : "pb_auth=...."
-    pb.authStore.loadFromCookie(`pb_auth=${cookieVal}`, "pb_auth");
-  }
+  if (cookieVal) pb.authStore.loadFromCookie(`pb_auth=${cookieVal}`);
 
-  // --- 3) S'il est valide, expose l'utilisateur à la suite du pipeline
-  if (pb.authStore.isValid) {
-    locals.user = pb.authStore.model ?? pb.authStore.record;
-  }
+  locals.user = pb.authStore.isValid ? pb.authStore.model ?? pb.authStore.record : null;
 
-  // --- 4) Routes publiques / protégées
   const isPublic =
     url.pathname === "/" ||
     url.pathname === "/login" ||
@@ -30,15 +22,32 @@ export const onRequest = async (context, next) => {
 
   const needsAuth =
     url.pathname.startsWith("/configurateur") ||
+    url.pathname.startsWith("/gallery") ||
     url.pathname.startsWith("/mes-lunettes") ||
     url.pathname.startsWith("/api/lunettes") ||
     url.pathname.startsWith("/api/logout");
 
   if (needsAuth && !locals.user && !isPublic) {
-    const to = new URL("/connexion-requise", url);
-    to.searchParams.set("redirect", url.pathname + url.search);
-    return Response.redirect(to, 303);
+    const redirectUrl = new URL("/connexion-requise", url);
+    redirectUrl.searchParams.set("redirect", url.pathname + url.search);
+    return Response.redirect(redirectUrl, 303);
   }
 
-  return next();
+  const response = await next();
+
+  // --- Écriture correcte du cookie pour le front
+  if (pb.authStore.isValid) {
+    const rawCookie = pb.authStore.exportToCookie();
+    const tokenValue = rawCookie.split("pb_auth=")[1]?.split(";")[0] ?? "";
+
+    cookies.set("pb_auth", tokenValue, {
+      httpOnly: false, // pour que JS puisse lire le cookie
+      secure: import.meta.env.MODE !== "development",
+      sameSite: "Lax",
+      path: "/",
+      domain: import.meta.env.MODE === "development" ? "localhost" : "ton-domaine.com",
+    });
+  }
+
+  return response;
 };

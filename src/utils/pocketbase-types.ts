@@ -64,6 +64,7 @@ export type LunettesRecord = {
 	materiaux_branche?: RecordIdString[]
 	couleurs_monture?: RecordIdString[]
 	couleurs_branche?: RecordIdString[]
+    img_svg?: string
 }
 
 // --- Commandes ---
