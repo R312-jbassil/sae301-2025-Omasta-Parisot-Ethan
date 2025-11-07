@@ -21,12 +21,12 @@
 
     async function renderHeaderAccount() {
       try {
-        const res = await fetch('/api/me', { credentials: 'same-origin' });
+        const res = await fetch('/apis/me', { credentials: 'same-origin' });
         const json = await res.json();
         if (json.authenticated) {
           accountNode.innerHTML = '<button id="header-logout" class="btn btn-sm btn-outline">Logout</button>';
           document.getElementById('header-logout').addEventListener('click', async () => {
-            await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+            await fetch('/apis/logout', { method: 'POST', credentials: 'same-origin' });
             // redirige vers la page de connexion (index)
             window.location.href = '/';
           });

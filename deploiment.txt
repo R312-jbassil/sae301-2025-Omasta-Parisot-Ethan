@@ -1,0 +1,3 @@
+URL github : https://github.com/R312-jbassil/sae301-2025-Omasta-Parisot-Ethan
+URL du site web : https://sae301.ethan-omastaparisot.com/
+URL pocketbase : https://sae301.ethan-omastaparisot.com/_/

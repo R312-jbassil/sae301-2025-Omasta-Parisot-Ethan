@@ -17,15 +17,15 @@ export const onRequest = async (context, next) => {
     url.pathname === "/login" ||
     url.pathname === "/signup" ||
     url.pathname === "/accueil" ||
-    url.pathname.startsWith("/api/login") ||
-    url.pathname.startsWith("/api/signup");
+    url.pathname.startsWith("/apis/login") ||
+    url.pathname.startsWith("/apis/signup");
 
   const needsAuth =
     url.pathname.startsWith("/configurateur") ||
     url.pathname.startsWith("/gallery") ||
     url.pathname.startsWith("/mes-lunettes") ||
-    url.pathname.startsWith("/api/lunettes") ||
-    url.pathname.startsWith("/api/logout");
+    url.pathname.startsWith("/apis/lunettes") ||
+    url.pathname.startsWith("/apis/logout");
 
   if (needsAuth && !locals.user && !isPublic) {
     const redirectUrl = new URL("/connexion-requise", url);
